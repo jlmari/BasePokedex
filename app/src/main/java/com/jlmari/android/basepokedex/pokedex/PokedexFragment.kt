@@ -1,5 +1,6 @@
 package com.jlmari.android.basepokedex.pokedex
 
+import android.widget.Toast
 import com.jlmari.android.basepokedex.R
 import com.jlmari.android.basepokedex.application.di.AppComponent
 import com.jlmari.android.basepokedex.base.BaseFragment
@@ -13,5 +14,13 @@ class PokedexFragment(override val layoutResId: Int = R.layout.fr_pokedex) :
         appComponent?.pokedexComponentFactory()
             ?.create()
             ?.inject(this)
+    }
+
+    override fun showMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showError(errorMessage: String) {
+        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
     }
 }

@@ -13,6 +13,8 @@ dependencies {
     // Clean architecture modules
     implementation(project(Modules.domain))
 
+    // Kotlin Coroutines
+    implementation(Libraries.coroutinesCore)
     // DI
     implementation(Libraries.dagger)
 

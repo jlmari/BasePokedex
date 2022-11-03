@@ -14,6 +14,12 @@ dependencies {
     implementation(project(Modules.domain))
     implementation(project(Modules.data))
 
+    // Retrofit
+    implementation(Libraries.retrofit)
+    implementation(Libraries.retrofitConverter)
+    // Okhttp
+    implementation(Libraries.okhttp)
+    implementation(Libraries.okhttpInterceptor)
     // DI
     implementation(Libraries.dagger)
 

@@ -9,7 +9,14 @@ import dagger.BindsInstance
 import dagger.Component
 
 @PerApplication
-@Component
+@Component(
+    modules = [
+        DispatchersModule::class,
+        RepositoriesModule::class,
+        DataSourcesModule::class,
+        NetworkDataSourceModule::class
+    ]
+)
 interface AppComponent {
 
     @Component.Factory

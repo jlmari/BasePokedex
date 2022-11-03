@@ -10,6 +10,8 @@ java {
 }
 
 dependencies {
+    // Kotlin Coroutines
+    implementation(Libraries.coroutinesCore)
     // DI
     implementation(Libraries.dagger)
 
