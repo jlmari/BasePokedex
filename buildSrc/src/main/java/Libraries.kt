@@ -37,7 +37,8 @@ object Libraries {
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
 
-    // MockK
+    // Testing
+    const val jUnit = "junit:junit:${Versions.jUnit}"
     const val mockK = "io.mockk:mockk:${Versions.mockK}"
     const val mockKAndroid = "io.mockk:mockk-android:${Versions.mockK}"
 }

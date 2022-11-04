@@ -12,9 +12,11 @@ java {
 dependencies {
     // Kotlin Coroutines
     implementation(Libraries.coroutinesCore)
+
     // DI
     implementation(Libraries.dagger)
 
     // Testing
+    testImplementation(Libraries.jUnit)
     testImplementation(Libraries.mockK)
 }

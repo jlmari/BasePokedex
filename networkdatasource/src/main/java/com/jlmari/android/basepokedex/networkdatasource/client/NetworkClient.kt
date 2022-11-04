@@ -2,7 +2,6 @@ package com.jlmari.android.basepokedex.networkdatasource.client
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.jlmari.android.basepokedex.networkdatasource.service.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,13 +20,12 @@ class NetworkClient(isDebug: Boolean) {
             .build()
     }
 
-    val service: ApiService by lazy {
+    val builder: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-            .create(ApiService::class.java)
     }
 
     companion object {
