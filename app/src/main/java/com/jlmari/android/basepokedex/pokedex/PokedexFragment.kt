@@ -10,7 +10,7 @@ import com.jlmari.android.basepokedex.application.di.AppComponent
 import com.jlmari.android.basepokedex.base.BaseFragment
 import com.jlmari.android.basepokedex.databinding.FrPokedexBinding
 import com.jlmari.android.basepokedex.domain.models.PokemonModel
-import com.jlmari.android.basepokedex.pokedex.ui.PokedexAdapter
+import com.jlmari.android.basepokedex.pokedex.ui.PokemonListAdapter
 import com.jlmari.android.basepokedex.presentation.pokedex.PokedexContract
 import com.jlmari.android.basepokedex.utils.showToast
 
@@ -18,7 +18,7 @@ class PokedexFragment :
     BaseFragment<PokedexContract.View, PokedexContract.Router, PokedexContract.Presenter, FrPokedexBinding>(),
     PokedexContract.View, PokedexContract.Router {
 
-    private lateinit var pokedexAdapter: PokedexAdapter
+    private lateinit var pokemonListAdapter: PokemonListAdapter
     private val pokemonList: MutableList<PokemonModel> = mutableListOf()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FrPokedexBinding
@@ -47,16 +47,16 @@ class PokedexFragment :
     }
 
     override fun hideProgress() {
-        getBinding().pbLoadMorePokemons.visibility = View.GONE
+        getBinding().pbLoadMorePokemons.visibility = View.INVISIBLE
     }
 
     override fun updatePokedex(newPokemons: List<PokemonModel>) {
         pokemonList.addAll(newPokemons)
-        pokedexAdapter = PokedexAdapter(pokemonList)
+        pokemonListAdapter = PokemonListAdapter(pokemonList)
         withBinding {
             rvPokedex.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = pokedexAdapter
+                adapter = pokemonListAdapter
             }
         }
     }
