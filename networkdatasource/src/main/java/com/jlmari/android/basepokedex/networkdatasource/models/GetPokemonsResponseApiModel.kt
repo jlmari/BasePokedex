@@ -6,9 +6,9 @@ data class GetPokemonsResponseApiModel(
     @SerializedName("count")
     val count: Int,
     @SerializedName("next")
-    val nextUrl: String,
+    val nextUrl: String?,
     @SerializedName("previous")
-    val previousUrl: String,
+    val previousUrl: String?,
     @SerializedName("results")
     val pokemonList: List<PokemonApiModel>
 )

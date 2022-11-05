@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Base Pokedex</string>
-    <string name="hello">Hello World!</string>
+
+    <!-- Errors -->
+    <string name="generic_error">Something went wrong. Please, try again</string>
+    <string name="no_more_pokemons_error">No more pokemons identified</string>
+
 </resources>

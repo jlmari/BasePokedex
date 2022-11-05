@@ -1,17 +1,18 @@
 package com.jlmari.android.basepokedex.pokedex
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jlmari.android.basepokedex.R
 import com.jlmari.android.basepokedex.application.di.AppComponent
 import com.jlmari.android.basepokedex.base.BaseFragment
 import com.jlmari.android.basepokedex.databinding.FrPokedexBinding
 import com.jlmari.android.basepokedex.domain.models.PokemonModel
 import com.jlmari.android.basepokedex.pokedex.ui.PokedexAdapter
 import com.jlmari.android.basepokedex.presentation.pokedex.PokedexContract
-
+import com.jlmari.android.basepokedex.utils.showToast
 
 class PokedexFragment :
     BaseFragment<PokedexContract.View, PokedexContract.Router, PokedexContract.Presenter, FrPokedexBinding>(),
@@ -33,12 +34,20 @@ class PokedexFragment :
         super.setupListeners()
         withBinding {
             svPokedex.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
-                // Check when users scroll to bottom
+                // Check when users scroll to bottom and notify presenter
                 if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
                     presenter.onScrollFinished()
                 }
             })
         }
+    }
+
+    override fun showProgress() {
+        getBinding().pbLoadMorePokemons.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        getBinding().pbLoadMorePokemons.visibility = View.GONE
     }
 
     override fun updatePokedex(newPokemons: List<PokemonModel>) {
@@ -52,7 +61,11 @@ class PokedexFragment :
         }
     }
 
-    override fun showError(errorMessage: String) {
-        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+    override fun showNoMorePokemonsError() {
+        context?.showToast(getString(R.string.no_more_pokemons_error))
+    }
+
+    override fun showErrorMessage(errorMessage: String?) {
+        context?.showToast(errorMessage ?: getString(R.string.generic_error))
     }
 }

@@ -24,7 +24,7 @@ suspend fun <T> safeApiCall(
             Success(response)
         }
     } catch (exception: Exception) {
-        when(exception) {
+        when (exception) {
             is HttpException -> {
                 val gson = Gson()
                 val type = object : TypeToken<ErrorApiModel>() {}.type

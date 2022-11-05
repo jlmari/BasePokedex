@@ -9,7 +9,9 @@ interface PokedexContract {
 
         fun updatePokedex(newPokemons: List<PokemonModel>)
 
-        fun showError(errorMessage: String)
+        fun showNoMorePokemonsError()
+
+        fun showErrorMessage(errorMessage: String?)
     }
 
     interface Router : BaseContract.Router

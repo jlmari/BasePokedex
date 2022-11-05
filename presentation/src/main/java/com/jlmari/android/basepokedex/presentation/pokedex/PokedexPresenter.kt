@@ -26,7 +26,6 @@ class PokedexPresenter @Inject constructor(
     }
 
     override fun onScrollFinished() {
-        pokedexOffset += DEFAULT_LIMIT
         requestNewPokemons(pokedexOffset)
     }
 
@@ -36,14 +35,17 @@ class PokedexPresenter @Inject constructor(
             val request = getPokemonsUseCase.invoke(offset, DEFAULT_LIMIT)
             request.either(
                 onSuccess = {
-                    viewAction {
-                        hideProgress()
-                        updatePokedex(it)
+                    viewAction { hideProgress() }
+                    if (it.isNotEmpty()) {
+                        pokedexOffset += DEFAULT_LIMIT
+                        viewAction { updatePokedex(it) }
+                    } else {
+                        viewAction { showNoMorePokemonsError() }
                     }
                 }, onFailure = {
                     viewAction {
                         hideProgress()
-                        showError(it.errorMessage ?: "error!")
+                        showErrorMessage(it.errorMessage)
                     }
                 }
             )
