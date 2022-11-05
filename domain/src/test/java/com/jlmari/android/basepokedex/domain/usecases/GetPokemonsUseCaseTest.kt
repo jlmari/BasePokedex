@@ -32,16 +32,16 @@ internal class GetPokemonsUseCaseTest {
 
     @Test
     fun `Call PokeRepository to get pokemons when invoked`() {
-        coEvery { pokeRepository.getPokemons() } returns Success(pokemonList)
+        coEvery { pokeRepository.getPokemons(,) } returns Success(pokemonList)
 
         runBlocking { getPokemonsUseCase.invoke() }
 
-        coVerify(exactly = 1) { pokeRepository.getPokemons() }
+        coVerify(exactly = 1) { pokeRepository.getPokemons(,) }
     }
 
     @Test
     fun `Return the expected List of PokemonModel by PokeRepository when invoked`() {
-        coEvery { pokeRepository.getPokemons() } returns Success(pokemonList)
+        coEvery { pokeRepository.getPokemons(,) } returns Success(pokemonList)
 
         val obtainedPokemonList = runBlocking { getPokemonsUseCase.invoke() }.getOrThrow()
 

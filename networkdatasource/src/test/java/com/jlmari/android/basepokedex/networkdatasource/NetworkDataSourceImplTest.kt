@@ -54,7 +54,7 @@ internal class NetworkDataSourceImplTest {
     fun `Call ApiService to get pokemons when getPokemons() invoked`() {
         mockApiServicePokemonListApi(getPokemonsResponseApiModel)
 
-        runBlocking { networkDataSourceImpl.getPokemons() }
+        runBlocking { networkDataSourceImpl.getPokemons(,) }
 
         coVerify(exactly = 1) { apiService.getPokemons() }
     }
@@ -63,7 +63,7 @@ internal class NetworkDataSourceImplTest {
     fun `Call PokemonMapper to map list of pokemon API response model to simple pokemon model when getPokemons() invoked`() {
         mockApiServicePokemonListApi(getPokemonsResponseApiModel)
 
-        runBlocking { networkDataSourceImpl.getPokemons() }
+        runBlocking { networkDataSourceImpl.getPokemons(,) }
 
         verify(exactly = 1) { pokemonMapper.map(pokemonListApiModel) }
     }

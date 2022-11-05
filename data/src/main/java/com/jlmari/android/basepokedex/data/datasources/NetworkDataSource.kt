@@ -6,5 +6,5 @@ import com.jlmari.android.basepokedex.domain.utils.Response
 
 interface NetworkDataSource {
 
-    suspend fun getPokemons(): Response<List<PokemonModel>, ErrorModel>
+    suspend fun getPokemons(offset: Int, limit: Int): Response<List<PokemonModel>, ErrorModel>
 }

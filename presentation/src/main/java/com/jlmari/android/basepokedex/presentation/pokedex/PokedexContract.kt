@@ -1,17 +1,21 @@
 package com.jlmari.android.basepokedex.presentation.pokedex
 
+import com.jlmari.android.basepokedex.domain.models.PokemonModel
 import com.jlmari.android.basepokedex.presentation.base.BaseContract
 
 interface PokedexContract {
 
     interface View : BaseContract.View {
 
-        fun showMessage(message: String)
+        fun updatePokedex(newPokemons: List<PokemonModel>)
 
         fun showError(errorMessage: String)
     }
 
     interface Router : BaseContract.Router
 
-    interface Presenter : BaseContract.Presenter<View, Router>
+    interface Presenter : BaseContract.Presenter<View, Router> {
+
+        fun onScrollFinished()
+    }
 }

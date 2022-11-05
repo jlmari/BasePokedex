@@ -11,7 +11,7 @@ class PokeRepositoryImpl @Inject constructor(
     private val networkDataSource: NetworkDataSource
 ): PokeRepository {
 
-    override suspend fun getPokemons(): Response<List<PokemonModel>, ErrorModel> {
-        return networkDataSource.getPokemons()
+    override suspend fun getPokemons(offset: Int, limit: Int): Response<List<PokemonModel>, ErrorModel> {
+        return networkDataSource.getPokemons(offset, limit)
     }
 }

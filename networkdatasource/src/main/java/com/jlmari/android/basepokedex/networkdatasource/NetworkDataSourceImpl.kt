@@ -19,7 +19,7 @@ class NetworkDataSourceImpl @Inject constructor(
         networkClient.builder.create(ApiService::class.java)
     }
 
-    override suspend fun getPokemons(): Response<List<PokemonModel>, ErrorModel> {
-        return safeApiCall { pokemonMapper.map(apiService.getPokemons().pokemonList) }
+    override suspend fun getPokemons(offset: Int, limit: Int): Response<List<PokemonModel>, ErrorModel> {
+        return safeApiCall { pokemonMapper.map(apiService.getPokemons(offset, limit).pokemonList) }
     }
 }

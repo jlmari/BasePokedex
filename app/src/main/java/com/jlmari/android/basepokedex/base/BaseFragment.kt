@@ -8,19 +8,29 @@ import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.viewbinding.ViewBinding
 import com.jlmari.android.basepokedex.application.di.AppComponent
+import com.jlmari.android.basepokedex.base.viewbinding.VBHelpers
+import com.jlmari.android.basepokedex.base.viewbinding.VBHelpersImpl
 import com.jlmari.android.basepokedex.presentation.base.BaseContract
 import com.jlmari.android.basepokedex.progressdialog.ProgressDialogBehaviour
 import com.jlmari.android.basepokedex.progressdialog.ProgressDialogFragment
 import com.jlmari.android.basepokedex.utils.app
 import java.lang.reflect.Modifier
+import java.util.*
 import javax.inject.Inject
 
 /**
- * Base fragment that must be extended by all fragments.
+ * Base fragment that must be extended by all fragments that want to use view binding or wants to
+ * handle configuration changes.
+ *
+ * View binding has some benefits over kotlin synthetic, especially the ease of use after reinflating
+ * layouts on onConfigurationChanged, that's why we only handle screen rotation and configuration
+ * changes on this new [BaseFragment].
  */
-abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router, P : BaseContract.Presenter<V, R>>
-    : Fragment(), BaseContract.View, BaseContract.Router, ProgressDialogBehaviour {
+abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router, P : BaseContract.Presenter<V, R>, VB : ViewBinding>(
+    private val vbHelperImpl: VBHelpersImpl<VB> = VBHelpersImpl()
+) : Fragment(), BaseContract.View, BaseContract.Router, ProgressDialogBehaviour, VBHelpers<VB> by vbHelperImpl {
 
     /**
      * The [BaseContract.Presenter] that will be injected.
@@ -30,9 +40,9 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
     lateinit var presenter: P
 
     /**
-     * Specify the layout resource ID to be inflated in the [BaseFragment.onCreateView] method.
+     * Specify the binding inflater to be used in the [BaseFragment.onCreateView] method.
      */
-    abstract val layoutResId: Int
+    abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
 
     /**
      * Add the required initializations to inject a custom progress dialog for all fragments.
@@ -63,7 +73,10 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(layoutResId, container, false)
+    ): View {
+        vbHelperImpl.updateBinding(bindingInflater(inflater, container, false))
+        return getBinding().root
+    }
 
     /**
      * [Fragment] lifecycle method onViewCreated().
@@ -124,6 +137,11 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
         presenter.onDestroy()
 
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        vbHelperImpl.destroyBinding()
     }
 
     /**

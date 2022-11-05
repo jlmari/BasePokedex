@@ -32,18 +32,18 @@ internal class PokeRepositoryImplTest {
 
     @Test
     fun `Call Network Data Source to get pokemon list when getPokemons() invoked`() {
-        coEvery { networkDataSource.getPokemons() } returns Success(pokemonList)
+        coEvery { networkDataSource.getPokemons(,) } returns Success(pokemonList)
 
-        runBlocking { pokeRepositoryImpl.getPokemons() }
+        runBlocking { pokeRepositoryImpl.getPokemons(,) }
 
-        coVerify(exactly = 1) { networkDataSource.getPokemons() }
+        coVerify(exactly = 1) { networkDataSource.getPokemons(,) }
     }
 
     @Test
     fun `Return the expected PokemonModel list given by Network Data Source when getPokemons() invoked`() {
-        coEvery { networkDataSource.getPokemons() } returns Success(pokemonList)
+        coEvery { networkDataSource.getPokemons(,) } returns Success(pokemonList)
 
-        val obtainedPokemonList = runBlocking { pokeRepositoryImpl.getPokemons() }.getOrThrow()
+        val obtainedPokemonList = runBlocking { pokeRepositoryImpl.getPokemons(,) }.getOrThrow()
 
         assertEquals(pokemonList, obtainedPokemonList)
     }

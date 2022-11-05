@@ -18,16 +18,27 @@ class PokedexPresenter @Inject constructor(
     private val errorHandler: CoroutineExceptionHandler by lazy { CoroutineExceptionHandler { _, e -> e.printStackTrace() } }
     private val scope: CoroutineScope by lazy { CoroutineScope(appDispatchers.main + SupervisorJob() + errorHandler) }
 
+    private var pokedexOffset: Int = DEFAULT_OFFSET
+
     override fun onCreate() {
         super.onCreate()
+        requestNewPokemons()
+    }
+
+    override fun onScrollFinished() {
+        pokedexOffset += DEFAULT_LIMIT
+        requestNewPokemons(pokedexOffset)
+    }
+
+    private fun requestNewPokemons(offset: Int = DEFAULT_OFFSET) {
         scope.launch {
             viewAction { showProgress() }
-            val request = getPokemonsUseCase.invoke()
+            val request = getPokemonsUseCase.invoke(offset, DEFAULT_LIMIT)
             request.either(
                 onSuccess = {
                     viewAction {
                         hideProgress()
-                        showMessage("success!")
+                        updatePokedex(it)
                     }
                 }, onFailure = {
                     viewAction {
@@ -37,5 +48,10 @@ class PokedexPresenter @Inject constructor(
                 }
             )
         }
+    }
+
+    companion object {
+        private const val DEFAULT_OFFSET: Int = 0
+        private const val DEFAULT_LIMIT: Int = 20
     }
 }

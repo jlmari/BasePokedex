@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Generic -->
+    <dimen name="margin_xsmall">2sp</dimen>
     <dimen name="margin_small">8sp</dimen>
     <dimen name="margin_medium">16dp</dimen>
+
+    <!-- Pokedex -->
+    <dimen name="progress_size">24dp</dimen>
+
 </resources>
