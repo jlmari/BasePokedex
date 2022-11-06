@@ -63,6 +63,7 @@ dependencies {
     kapt(Libraries.daggerCompiler)
 
     // Testing
+    testImplementation(Libraries.jUnit)
     testImplementation(Libraries.mockK)
     androidTestImplementation(Libraries.mockKAndroid)
 }

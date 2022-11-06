@@ -28,6 +28,7 @@ object Versions {
     // Dagger
     const val dagger = "2.44"
 
-    // MockK
+    // Testing
+    const val jUnit = "4.13.2"
     const val mockK = "1.13.2"
 }
