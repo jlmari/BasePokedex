@@ -88,7 +88,7 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
         super.onViewCreated(view, savedInstanceState)
 
         // Get extras
-        retrieveBundleData(savedInstanceState ?: arguments ?: Bundle.EMPTY)
+        retrieveBundleData()
 
         // Notify presenter
         @Suppress("UNCHECKED_CAST")
@@ -154,10 +154,8 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
     /**
      * Method to get all the extra data sent via Intent's from another context.
      * It's an optional method since maybe there is not extra data needed.
-     *
-     * @param bundle The required [Bundle] where the data is compressed
      */
-    open fun retrieveBundleData(bundle: Bundle) {
+    open fun retrieveBundleData() {
     }
 
     /**

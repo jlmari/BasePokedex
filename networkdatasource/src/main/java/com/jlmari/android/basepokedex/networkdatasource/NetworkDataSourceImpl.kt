@@ -2,9 +2,11 @@ package com.jlmari.android.basepokedex.networkdatasource
 
 import com.jlmari.android.basepokedex.data.datasources.NetworkDataSource
 import com.jlmari.android.basepokedex.domain.models.ErrorModel
+import com.jlmari.android.basepokedex.domain.models.PokemonDetailModel
 import com.jlmari.android.basepokedex.domain.models.PokemonModel
 import com.jlmari.android.basepokedex.domain.utils.Response
 import com.jlmari.android.basepokedex.networkdatasource.client.NetworkClient
+import com.jlmari.android.basepokedex.networkdatasource.mappers.PokemonDetailMapper
 import com.jlmari.android.basepokedex.networkdatasource.mappers.PokemonMapper
 import com.jlmari.android.basepokedex.networkdatasource.service.ApiService
 import com.jlmari.android.basepokedex.networkdatasource.utils.safeApiCall
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 class NetworkDataSourceImpl @Inject constructor(
     networkClient: NetworkClient,
-    private val pokemonMapper: PokemonMapper
+    private val pokemonMapper: PokemonMapper,
+    private val pokemonDetailMapper: PokemonDetailMapper
 ) : NetworkDataSource {
 
     private val apiService: ApiService by lazy {
@@ -21,5 +24,9 @@ class NetworkDataSourceImpl @Inject constructor(
 
     override suspend fun getPokemons(offset: Int, limit: Int): Response<List<PokemonModel>, ErrorModel> {
         return safeApiCall { pokemonMapper.map(apiService.getPokemons(offset, limit).pokemonList) }
+    }
+
+    override suspend fun getPokemonDetail(id: Int): Response<PokemonDetailModel, ErrorModel> {
+        return safeApiCall { pokemonDetailMapper.map(apiService.getPokemonDetail(id)) }
     }
 }

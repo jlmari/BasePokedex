@@ -32,8 +32,7 @@ class PokedexPresenter @Inject constructor(
     private fun requestNewPokemons(offset: Int = DEFAULT_OFFSET) {
         scope.launch {
             viewAction { showProgress() }
-            val request = getPokemonsUseCase.invoke(offset, DEFAULT_LIMIT)
-            request.either(
+            getPokemonsUseCase.invoke(offset, DEFAULT_LIMIT).either(
                 onSuccess = {
                     viewAction { hideProgress() }
                     if (it.isNotEmpty()) {

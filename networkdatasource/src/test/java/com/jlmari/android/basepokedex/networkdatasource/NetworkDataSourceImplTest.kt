@@ -1,7 +1,9 @@
 package com.jlmari.android.basepokedex.networkdatasource
 
 import com.jlmari.android.basepokedex.networkdatasource.client.NetworkClient
+import com.jlmari.android.basepokedex.networkdatasource.mappers.PokemonDetailMapper
 import com.jlmari.android.basepokedex.networkdatasource.mappers.PokemonMapper
+import com.jlmari.android.basepokedex.networkdatasource.models.GetPokemonDetailResponseApiModel
 import com.jlmari.android.basepokedex.networkdatasource.models.GetPokemonsResponseApiModel
 import com.jlmari.android.basepokedex.networkdatasource.models.PokemonApiModel
 import com.jlmari.android.basepokedex.networkdatasource.service.ApiService
@@ -30,6 +32,12 @@ internal class NetworkDataSourceImplTest {
     @MockK
     private lateinit var pokemonListApiModel: List<PokemonApiModel>
 
+    @MockK
+    private lateinit var pokemonDetailMapper: PokemonDetailMapper
+
+    @MockK
+    private lateinit var getPokemonDetailResponseApiModel: GetPokemonDetailResponseApiModel
+
     @InjectMockKs
     private lateinit var networkDataSourceImpl: NetworkDataSourceImpl
 
@@ -50,6 +58,10 @@ internal class NetworkDataSourceImplTest {
         every { getPokemonsResponseApiModel.pokemonList } returns pokemonListApiModel
     }
 
+    private fun mockApiServicePokemonDetailApi(getPokemonDetailResponseApiModel: GetPokemonDetailResponseApiModel) {
+        coEvery { apiService.getPokemonDetail(any()) } returns getPokemonDetailResponseApiModel
+    }
+
     @Test
     fun `Call ApiService to get pokemons with correct parameters when getPokemons() invoked`() {
         mockApiServicePokemonListApi(getPokemonsResponseApiModel)
@@ -68,5 +80,24 @@ internal class NetworkDataSourceImplTest {
         runBlocking { networkDataSourceImpl.getPokemons(0, 0) }
 
         verify(exactly = 1) { pokemonMapper.map(pokemonListApiModel) }
+    }
+
+    @Test
+    fun `Call ApiService to get pokemon detail with correct id when getPokemonDetail() invoked`() {
+        mockApiServicePokemonDetailApi(getPokemonDetailResponseApiModel)
+
+        val pokemonId = 12
+        runBlocking { networkDataSourceImpl.getPokemonDetail(pokemonId) }
+
+        coVerify(exactly = 1) { apiService.getPokemonDetail(pokemonId) }
+    }
+
+    @Test
+    fun `Call PokemonDetailMapper to map details of pokemon API response model to simple pokemon detail model when getPokemonDetail() invoked`() {
+        mockApiServicePokemonDetailApi(getPokemonDetailResponseApiModel)
+
+        runBlocking { networkDataSourceImpl.getPokemonDetail(1) }
+
+        verify(exactly = 1) { pokemonDetailMapper.map(getPokemonDetailResponseApiModel) }
     }
 }

@@ -8,5 +8,8 @@ interface PokemonDetailContract {
 
     interface Router : BaseContract.Router
 
-    interface Presenter : BaseContract.Presenter<View, Router>
+    interface Presenter : BaseContract.Presenter<View, Router> {
+
+        fun onPokemonIdRetrieved(pokemonId: Int)
+    }
 }
