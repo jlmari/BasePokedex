@@ -2,11 +2,19 @@
 <resources>
 
     <!-- Generic -->
-    <dimen name="margin_xsmall">2sp</dimen>
-    <dimen name="margin_small">8sp</dimen>
+    <dimen name="margin_xsmall">2dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
+
+    <!-- Text -->
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_regular">16sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
 
     <!-- Pokedex -->
     <dimen name="progress_size">24dp</dimen>
+
+    <!-- Pokemon detail -->
+    <dimen name="pokemon_detail_image_size">120dp</dimen>
 
 </resources>

@@ -24,14 +24,25 @@ class PokemonDetailPresenter @Inject constructor(
         requestPokemonInfo()
     }
 
+    override fun onReloadDetailButtonClicked() {
+        requestPokemonInfo()
+    }
+
     private fun requestPokemonInfo() {
         scope.launch {
             viewAction { showProgress() }
             getPokemonDetailUseCase.invoke(pokemonId).either(
                 onSuccess = {
-                    viewAction { hideProgress() }
+                    viewAction {
+                        hideProgress()
+                        hideReloadButton()
+                        drawPokemonDetail(it)
+                    }
                 }, onFailure = {
-                    viewAction { hideProgress() }
+                    viewAction {
+                        hideProgress()
+                        showReloadButton()
+                    }
                 }
             )
         }

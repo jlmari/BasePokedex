@@ -7,9 +7,85 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_medium"
         android:orientation="vertical">
 
-        <!-- TODO: Create detail view -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_pokemon_front_photo"
+                    android:layout_width="@dimen/pokemon_detail_image_size"
+                    android:layout_height="@dimen/pokemon_detail_image_size"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:background="@color/teal_200" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_pokemon_back_photo"
+                    android:layout_width="@dimen/pokemon_detail_image_size"
+                    android:layout_height="@dimen/pokemon_detail_image_size"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:background="@color/teal_200" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pokemon_order"
+                    style="@style/BaseText.Large"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pokemon_name"
+                    style="@style/BaseText.Large"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pokemon_weight"
+                    style="@style/BaseText"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pokemon_height"
+                    style="@style/BaseText"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/sp_pokemon_types"
+                    style="@style/BaseSpinner"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/sp_pokemon_abilities"
+                    style="@style/BaseSpinner"
+                    android:layout_margin="@dimen/margin_small" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/sp_pokemon_moves"
+                    style="@style/BaseSpinner"
+                    android:layout_margin="@dimen/margin_small" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_reload_detail"
+            style="@style/BaseButton"
+            android:layout_margin="@dimen/margin_medium"
+            android:text="@string/reload"
+            android:visibility="gone" />
 
     </LinearLayout>
 

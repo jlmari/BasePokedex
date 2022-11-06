@@ -7,7 +7,8 @@ data class PokemonDetailModel(
     val weightKg: Double,
     val heightMeters: Double,
     val types: List<String>,
-    val photoUrls: List<String>,
+    val backPhotoUrl: String,
+    val frontPhotoUrl: String,
     val abilities: List<String>,
     val moves: List<String>
 )

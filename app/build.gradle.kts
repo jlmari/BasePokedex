@@ -57,6 +57,7 @@ dependencies {
     implementation(Libraries.materialDesign)
     implementation(Libraries.xNavigationFragment)
     implementation(Libraries.xNavigationUi)
+    implementation(Libraries.glide)
 
     // DI
     implementation(Libraries.dagger)

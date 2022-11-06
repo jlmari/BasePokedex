@@ -16,7 +16,8 @@ class PokemonDetailMapper @Inject constructor() :
             from.weight.toDouble() / 10,
             from.height.toDouble() / 10,
             from.typeList.map { it.typeInfo.name },
-            listOf(from.photoList.backDefaultPhoto, from.photoList.frontDefaultPhoto),
+            from.photoList.backDefaultPhoto,
+            from.photoList.frontDefaultPhoto,
             from.abilityList.map { it.abilityInfo.name },
             from.moveList.map { it.moveInfo.name }
         )
