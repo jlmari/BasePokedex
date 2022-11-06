@@ -1,17 +1,35 @@
 package com.jlmari.android.basepokedex.presentation.base
 
+import com.jlmari.android.basepokedex.domain.dispatchers.AppDispatchers
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import java.util.*
 
 /**
  * Base presenter that must be extended by all presenters.
  */
-abstract class BasePresenter<V : BaseContract.View, R : BaseContract.Router> :
+abstract class BasePresenter<V : BaseContract.View, R : BaseContract.Router>(appDispatchers: AppDispatchers? = null) :
     BaseContract.Presenter<V, R> {
 
     private var view: V? = null
     private val pendingViewTransactions: Queue<(V) -> Unit> = LinkedList()
     private var router: R? = null
     private val pendingRouterTransactions: Queue<(R) -> Unit> = LinkedList()
+
+    /**
+     * Manage errors using Kotlin Coroutines and create a new [CoroutineScope] for async calls.
+     */
+    private val errorHandler: CoroutineExceptionHandler by lazy {
+        CoroutineExceptionHandler { _, e -> e.printStackTrace() }
+    }
+    protected val scope: CoroutineScope by lazy {
+        if (appDispatchers != null) {
+            CoroutineScope(appDispatchers.main + SupervisorJob() + errorHandler)
+        } else {
+            CoroutineScope(SupervisorJob() + errorHandler)
+        }
+    }
 
     /**
      * Attach a View [V] to the presenter so the presenter can interact and handle that view.
