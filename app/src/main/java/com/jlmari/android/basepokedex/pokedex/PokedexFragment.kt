@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jlmari.android.basepokedex.R
 import com.jlmari.android.basepokedex.application.di.AppComponent
@@ -18,8 +19,7 @@ class PokedexFragment :
     BaseFragment<PokedexContract.View, PokedexContract.Router, PokedexContract.Presenter, FrPokedexBinding>(),
     PokedexContract.View, PokedexContract.Router {
 
-    private lateinit var pokemonListAdapter: PokemonListAdapter
-    private val pokemonList: MutableList<PokemonModel> = mutableListOf()
+    private val pokemonListAdapter: PokemonListAdapter by lazy { PokemonListAdapter() }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FrPokedexBinding
         get() = FrPokedexBinding::inflate
@@ -33,6 +33,9 @@ class PokedexFragment :
     override fun setupListeners() {
         super.setupListeners()
         withBinding {
+            pokemonListAdapter.setupAdapter(mutableListOf()) { pokemonId ->
+                presenter.onPokemonItemClicked(pokemonId)
+            }
             svPokedex.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
                 // Check when users scroll to bottom and notify presenter
                 if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
@@ -51,8 +54,7 @@ class PokedexFragment :
     }
 
     override fun updatePokedex(newPokemons: List<PokemonModel>) {
-        pokemonList.addAll(newPokemons)
-        pokemonListAdapter = PokemonListAdapter(pokemonList)
+        pokemonListAdapter.addItems(newPokemons)
         withBinding {
             rvPokedex.apply {
                 layoutManager = LinearLayoutManager(context)
@@ -67,5 +69,11 @@ class PokedexFragment :
 
     override fun showErrorMessage(errorMessage: String?) {
         context?.showToast(errorMessage ?: getString(R.string.generic_error))
+    }
+
+    override fun navigateToPokemonDetail(pokemonId: Int) {
+        val direction = PokedexFragmentDirections.actionPokedexFragmentToPokemonDetailFragment()
+            .apply { this.pokemonId = pokemonId }
+        findNavController().navigate(direction)
     }
 }

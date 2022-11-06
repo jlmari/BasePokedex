@@ -52,6 +52,10 @@ class PokedexPresenter @Inject constructor(
         }
     }
 
+    override fun onPokemonItemClicked(pokemonId: Int) {
+        routerAction { navigateToPokemonDetail(pokemonId) }
+    }
+
     companion object {
         private const val DEFAULT_OFFSET: Int = 0
         private const val DEFAULT_LIMIT: Int = 50

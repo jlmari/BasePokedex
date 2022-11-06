@@ -14,10 +14,15 @@ interface PokedexContract {
         fun showErrorMessage(errorMessage: String?)
     }
 
-    interface Router : BaseContract.Router
+    interface Router : BaseContract.Router {
+
+        fun navigateToPokemonDetail(pokemonId: Int)
+    }
 
     interface Presenter : BaseContract.Presenter<View, Router> {
 
         fun onScrollFinished()
+
+        fun onPokemonItemClicked(pokemonId: Int)
     }
 }
