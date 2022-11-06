@@ -46,24 +46,26 @@ internal class NetworkDataSourceImplTest {
     }
 
     private fun mockApiServicePokemonListApi(getPokemonsResponseApiModel: GetPokemonsResponseApiModel) {
-        coEvery { apiService.getPokemons() } returns getPokemonsResponseApiModel
+        coEvery { apiService.getPokemons(any(), any()) } returns getPokemonsResponseApiModel
         every { getPokemonsResponseApiModel.pokemonList } returns pokemonListApiModel
     }
 
     @Test
-    fun `Call ApiService to get pokemons when getPokemons() invoked`() {
+    fun `Call ApiService to get pokemons with correct parameters when getPokemons() invoked`() {
         mockApiServicePokemonListApi(getPokemonsResponseApiModel)
 
-        runBlocking { networkDataSourceImpl.getPokemons(,) }
+        val inputOffset = 0
+        val inputLimit = 40
+        runBlocking { networkDataSourceImpl.getPokemons(inputOffset, inputLimit) }
 
-        coVerify(exactly = 1) { apiService.getPokemons() }
+        coVerify(exactly = 1) { apiService.getPokemons(inputOffset, inputLimit) }
     }
 
     @Test
     fun `Call PokemonMapper to map list of pokemon API response model to simple pokemon model when getPokemons() invoked`() {
         mockApiServicePokemonListApi(getPokemonsResponseApiModel)
 
-        runBlocking { networkDataSourceImpl.getPokemons(,) }
+        runBlocking { networkDataSourceImpl.getPokemons(0, 0) }
 
         verify(exactly = 1) { pokemonMapper.map(pokemonListApiModel) }
     }
