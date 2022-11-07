@@ -15,6 +15,6 @@
     <dimen name="progress_size">24dp</dimen>
 
     <!-- Pokemon detail -->
-    <dimen name="pokemon_detail_image_size">120dp</dimen>
+    <dimen name="pokemon_detail_image_size">80dp</dimen>
 
 </resources>

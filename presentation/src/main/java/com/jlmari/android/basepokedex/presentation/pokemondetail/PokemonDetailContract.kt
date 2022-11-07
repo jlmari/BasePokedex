@@ -11,7 +11,7 @@ interface PokemonDetailContract {
 
         fun hideReloadButton()
 
-        fun drawPokemonDetail(pokemonDetail: PokemonDetailModel)
+        fun drawPokemonDetail(pokemon: PokemonDetailModel)
 
         fun showErrorMessage(errorMessage: String?)
     }

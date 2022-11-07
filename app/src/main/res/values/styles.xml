@@ -27,6 +27,7 @@
 
     <style name="BaseSpinner" parent="BaseText">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:spinnerMode">dialog</item>
     </style>
 
 </resources>

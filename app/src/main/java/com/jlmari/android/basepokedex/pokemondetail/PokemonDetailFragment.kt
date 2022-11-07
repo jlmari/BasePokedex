@@ -14,6 +14,7 @@ import com.jlmari.android.basepokedex.domain.models.PokemonDetailModel
 import com.jlmari.android.basepokedex.presentation.pokemondetail.PokemonDetailContract
 import com.jlmari.android.basepokedex.utils.loadImage
 import com.jlmari.android.basepokedex.utils.showToast
+import java.util.*
 
 class PokemonDetailFragment :
     BaseFragment<PokemonDetailContract.View, PokemonDetailContract.Router, PokemonDetailContract.Presenter, FrPokemonDetailBinding>(),
@@ -25,9 +26,7 @@ class PokemonDetailFragment :
     private val navArgs: PokemonDetailFragmentArgs by navArgs()
 
     override fun injectDependencies(appComponent: AppComponent?) {
-        appComponent?.pokemonDetailFactory()
-            ?.create()
-            ?.inject(this)
+        appComponent?.pokemonDetailFactory()?.create()?.inject(this)
     }
 
     override fun retrieveBundleData() {
@@ -48,33 +47,46 @@ class PokemonDetailFragment :
         getBinding().btnReloadDetail.visibility = View.GONE
     }
 
-    override fun drawPokemonDetail(pokemonDetail: PokemonDetailModel) {
+    override fun drawPokemonDetail(pokemon: PokemonDetailModel) {
         withBinding {
-            ivPokemonBackPhoto.loadImage(pokemonDetail.backPhotoUrl)
-            ivPokemonFrontPhoto.loadImage(pokemonDetail.frontPhotoUrl)
-            tvPokemonOrder.text = getString(R.string.pokemon_detail_order, pokemonDetail.order)
-            tvPokemonName.text = getString(R.string.pokemon_detail_name, pokemonDetail.name)
-            tvPokemonWeight.text = getString(R.string.pokemon_detail_weight, pokemonDetail.weightKg)
-            tvPokemonHeight.text = getString(R.string.pokemon_detail_height, pokemonDetail.heightMeters)
+            ivPokemonBackPhoto.loadImage(pokemon.backPhotoUrl)
+            ivPokemonFrontPhoto.loadImage(pokemon.frontPhotoUrl)
+            tvPokemonOrder.text = getString(R.string.pokemon_detail_order, pokemon.order)
+            tvPokemonName.text = getString(R.string.pokemon_detail_name,
+                pokemon.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+            tvPokemonWeight.text = getString(R.string.pokemon_detail_weight, pokemon.weightKg)
+            tvPokemonHeight.text = getString(R.string.pokemon_detail_height, pokemon.heightMeters)
             context?.let { context ->
-                spPokemonTypes.adapter =
-                    pokemonDetail.types.createSimpleArrayAdapter(context).apply {
-                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    }
-                spPokemonAbilities.adapter =
-                    pokemonDetail.abilities.createSimpleArrayAdapter(context).apply {
-                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    }
-                spPokemonMoves.adapter =
-                    pokemonDetail.moves.createSimpleArrayAdapter(context).apply {
-                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    }
+                spPokemonTypes.adapter = pokemon.types.createSimpleArrayAdapter(
+                    context,
+                    getString(R.string.pokemon_detail_types)
+                ).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+                spPokemonAbilities.adapter = pokemon.abilities.createSimpleArrayAdapter(
+                    context,
+                    getString(R.string.pokemon_detail_abilities)
+                ).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+                spPokemonMoves.adapter = pokemon.moves.createSimpleArrayAdapter(
+                    context,
+                    getString(R.string.pokemon_detail_moves)
+                ).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
             }
         }
     }
 
-    private fun List<Any>.createSimpleArrayAdapter(context: Context): ArrayAdapter<Any> =
-        ArrayAdapter(context, android.R.layout.simple_spinner_item, this)
+    private fun List<String>.createSimpleArrayAdapter(
+        context: Context,
+        label: String
+    ): ArrayAdapter<String> {
+        val adapterList = this.toMutableList()
+            .apply { add(0, getString(R.string.pokemon_detail_spinner_first_item, label)) }
+        return ArrayAdapter(context, android.R.layout.simple_spinner_item, adapterList)
+    }
 
     override fun showErrorMessage(errorMessage: String?) {
         context?.showToast(errorMessage ?: getString(R.string.generic_error))

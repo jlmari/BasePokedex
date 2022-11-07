@@ -11,7 +11,11 @@
     <!-- Pokemon detail -->
     <string name="pokemon_detail_order">Order: %1$d</string>
     <string name="pokemon_detail_name">Name: %1$s</string>
-    <string name="pokemon_detail_weight">%1$f kg</string>
-    <string name="pokemon_detail_height">%1$f m</string>
+    <string name="pokemon_detail_weight">Weight: %1$.1f kg</string>
+    <string name="pokemon_detail_height">Height: %1$.1f m</string>
+    <string name="pokemon_detail_spinner_first_item">List of %1$s</string>
+    <string name="pokemon_detail_types">Types</string>
+    <string name="pokemon_detail_abilities">Abilities</string>
+    <string name="pokemon_detail_moves">Moves</string>
 
 </resources>
