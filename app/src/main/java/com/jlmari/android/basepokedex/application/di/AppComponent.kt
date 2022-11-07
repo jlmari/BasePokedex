@@ -15,7 +15,8 @@ import dagger.Component
         DispatchersModule::class,
         RepositoriesModule::class,
         DataSourcesModule::class,
-        NetworkDataSourceModule::class
+        NetworkDataSourceModule::class,
+        MemoryDataSourceModule::class
     ]
 )
 interface AppComponent {

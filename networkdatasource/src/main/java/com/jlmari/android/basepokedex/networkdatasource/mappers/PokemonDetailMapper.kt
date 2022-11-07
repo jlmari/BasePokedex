@@ -15,10 +15,10 @@ class PokemonDetailMapper @Inject constructor() :
             from.name,
             from.weight.toDouble() / 10,
             from.height.toDouble() / 10,
-            from.typeList.map { it.typeInfo.name },
+            from.typeList.map { type -> type.typeInfo.name },
             from.photoList.backDefaultPhoto,
             from.photoList.frontDefaultPhoto,
-            from.abilityList.map { it.abilityInfo.name },
-            from.moveList.map { it.moveInfo.name }
+            from.abilityList.map { ability -> ability.abilityInfo.name },
+            from.moveList.map { move -> move.moveInfo.name }
         )
 }

@@ -34,6 +34,11 @@ object Libraries {
     // Play Services
     const val playServices = "com.google.android.gms:play-services-auth:${Versions.playServices}"
 
+    // Room
+    const val room = "androidx.room:room-runtime:${Versions.room}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+
     // Dagger
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"

@@ -12,6 +12,6 @@ class PokemonMapper @Inject constructor() : ListMapper<PokemonApiModel, PokemonM
 
     private fun convertUrlToId(url: String): Int =
         url.substringAfter("/pokemon/")
-            .filter { it.isDigit() }
+            .filter { substring -> substring.isDigit() }
             .toInt()
 }

@@ -1,6 +1,7 @@
 object Config {
     object AppConfig {
-        const val namespace = "com.jlmari.android.basepokedex"
+        const val appNamespace = "com.jlmari.android.basepokedex"
+        const val memoryNamespace = "com.jlmari.android.basepokedex.memorydatasource"
         const val appId = "com.jlmari.android.basepokedex"
         const val compileSdkVersion = 33
         const val targetSdkVersion = 33

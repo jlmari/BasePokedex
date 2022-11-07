@@ -5,9 +5,10 @@ import com.jlmari.android.basepokedex.application.scopes.PerApplication
 import com.jlmari.android.basepokedex.networkdatasource.client.NetworkClient
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
-class NetworkDataSourceModule {
+object NetworkDataSourceModule {
 
     @Provides
     @PerApplication

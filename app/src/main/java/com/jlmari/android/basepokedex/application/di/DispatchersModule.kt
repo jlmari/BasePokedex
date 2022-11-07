@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 @Module
-class DispatchersModule {
+object DispatchersModule {
 
     @Provides
     @PerApplication
