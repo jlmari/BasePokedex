@@ -34,5 +34,5 @@ object Versions {
     // Testing
     const val jUnit = "4.13.2"
     const val mockK = "1.13.2"
-    const val roboelectric = "4.9"
+    const val robolectric = "4.9"
 }

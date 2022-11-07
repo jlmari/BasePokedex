@@ -23,9 +23,9 @@ class PokeRepositoryImpl @Inject constructor(
 
     override suspend fun getPokemonDetail(id: Int): Response<PokemonDetailModel, ErrorModel> =
         singleSourceOfTruth(
-            dbDataSource = { memoryDataSource.getPokemonDetail(id) },
-            apiDataSource = { networkDataSource.getPokemonDetail(id) },
-            dbCallback = { pokemonDetail ->
+            memoryDataSource = { memoryDataSource.getPokemonDetail(id) },
+            networkDataSource = { networkDataSource.getPokemonDetail(id) },
+            memoryCallback = { pokemonDetail ->
                 memoryDataSource.savePokemonDetail(pokemonDetail)
                 memoryDataSource.getPokemonDetail(id)
             }

@@ -55,5 +55,5 @@ dependencies {
     testImplementation(Libraries.xLiveData)
     testImplementation(Libraries.jUnit)
     testImplementation(Libraries.mockK)
-    testImplementation(Libraries.roboelectric)
+    testImplementation(Libraries.robolectric)
 }

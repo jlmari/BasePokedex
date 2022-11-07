@@ -10,15 +10,15 @@ import com.jlmari.android.basepokedex.domain.utils.either
  * to store the values in the database.
  */
 suspend fun <V, E> singleSourceOfTruth(
-    dbDataSource: suspend (Unit) -> Response<V, E>,
-    apiDataSource: suspend (Unit) -> Response<V, E>,
-    dbCallback: suspend (V) -> Response<V, E>
+    memoryDataSource: suspend (Unit) -> Response<V, E>,
+    networkDataSource: suspend (Unit) -> Response<V, E>,
+    memoryCallback: suspend (V) -> Response<V, E>
 ): Response<V, E> =
-    dbDataSource(Unit).either(
+    memoryDataSource(Unit).either(
         onSuccess = { Success(it) },
         onFailure = {
-            apiDataSource(Unit).either(
-                onSuccess = { apiResult -> dbCallback.invoke(apiResult) },
+            networkDataSource(Unit).either(
+                onSuccess = { networkResult -> memoryCallback.invoke(networkResult) },
                 onFailure = { error -> Failure(error) })
         }
     )

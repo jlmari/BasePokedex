@@ -42,5 +42,5 @@ object Libraries {
     const val jUnit = "junit:junit:${Versions.jUnit}"
     const val mockK = "io.mockk:mockk:${Versions.mockK}"
     const val mockKAndroid = "io.mockk:mockk-android:${Versions.mockK}"
-    const val roboelectric =  "org.robolectric:robolectric:${Versions.roboelectric}"
+    const val robolectric =  "org.robolectric:robolectric:${Versions.robolectric}"
 }
