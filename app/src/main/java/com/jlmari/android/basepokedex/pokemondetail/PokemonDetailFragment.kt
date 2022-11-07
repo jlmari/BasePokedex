@@ -13,6 +13,7 @@ import com.jlmari.android.basepokedex.databinding.FrPokemonDetailBinding
 import com.jlmari.android.basepokedex.domain.models.PokemonDetailModel
 import com.jlmari.android.basepokedex.presentation.pokemondetail.PokemonDetailContract
 import com.jlmari.android.basepokedex.utils.loadImage
+import com.jlmari.android.basepokedex.utils.showToast
 
 class PokemonDetailFragment :
     BaseFragment<PokemonDetailContract.View, PokemonDetailContract.Router, PokemonDetailContract.Presenter, FrPokemonDetailBinding>(),
@@ -74,4 +75,8 @@ class PokemonDetailFragment :
 
     private fun List<Any>.createSimpleArrayAdapter(context: Context): ArrayAdapter<Any> =
         ArrayAdapter(context, android.R.layout.simple_spinner_item, this)
+
+    override fun showErrorMessage(errorMessage: String?) {
+        context?.showToast(errorMessage ?: getString(R.string.generic_error))
+    }
 }

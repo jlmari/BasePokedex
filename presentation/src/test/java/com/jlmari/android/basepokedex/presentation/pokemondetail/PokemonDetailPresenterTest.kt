@@ -1,13 +1,12 @@
 package com.jlmari.android.basepokedex.presentation.pokemondetail
 
 import com.jlmari.android.basepokedex.domain.dispatchers.AppDispatchers
+import com.jlmari.android.basepokedex.domain.models.ErrorModel
 import com.jlmari.android.basepokedex.domain.models.PokemonDetailModel
 import com.jlmari.android.basepokedex.domain.usecases.GetPokemonDetailUseCase
+import com.jlmari.android.basepokedex.domain.utils.Failure
 import com.jlmari.android.basepokedex.domain.utils.Success
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
@@ -46,15 +45,144 @@ internal class PokemonDetailPresenterTest {
         MockKAnnotations.init(this, relaxUnitFun = true)
     }
 
-    @Test
-    fun `Call GetPokemonDetailUseCase with correct pokemon id when onCreate()`() {
+    private fun mockMainDispatcher() {
         every { appDispatchers.main } returns Dispatchers.Unconfined
+    }
+
+    @Test
+    fun `Call GetPokemonDetailUseCase with correct pokemon id (if retrieved) when onCreate()`() {
+        val retrievedId = 1
+        mockMainDispatcher()
         coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
 
-        val retrievedId = 1
         pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
         pokemonDetailPresenter.onCreate()
 
         coVerify(exactly = 1) { getPokemonDetailUseCase.invoke(retrievedId) }
+    }
+
+    @Test
+    fun `Do not call GetPokemonDetailUseCase if pokemon id not retrieved when onCreate()`() {
+        val retrievedId = 0
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+
+        pokemonDetailPresenter.onCreate()
+
+        coVerify(exactly = 0) { getPokemonDetailUseCase.invoke(retrievedId) }
+    }
+
+    @Test
+    fun `Call GetPokemonDetailUseCase with correct pokemon id (if retrieved) when onReloadDetailButtonClicked()`() {
+        val retrievedId = 1
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+
+        pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
+        pokemonDetailPresenter.onReloadDetailButtonClicked()
+
+        coVerify(exactly = 1) { getPokemonDetailUseCase.invoke(retrievedId) }
+    }
+
+    @Test
+    fun `Do not call GetPokemonDetailUseCase if pokemon id not retrieved when onReloadDetailButtonClicked()`() {
+        val retrievedId = 0
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+
+        pokemonDetailPresenter.onReloadDetailButtonClicked()
+
+        coVerify(exactly = 0) { getPokemonDetailUseCase.invoke(retrievedId) }
+    }
+
+    @Test
+    fun `Call View (if attached) to show progress while expecting GetPokemonDetailUseCase response and then hide progress when GetPokemonDetailUseCase returns success response`() {
+        val retrievedId = 1
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+
+        pokemonDetailPresenter.attachView(pokemonDetailView)
+        pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
+        pokemonDetailPresenter.onCreate()
+
+        verifyOrder {
+            pokemonDetailView.showProgress()
+            pokemonDetailView.hideProgress()
+        }
+    }
+
+    @Test
+    fun `Call View (if attached) to hide reload button and draw pokemon detail when GetPokemonDetailUseCase returns success response`() {
+        val retrievedId = 1
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+
+        pokemonDetailPresenter.attachView(pokemonDetailView)
+        pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
+        pokemonDetailPresenter.onCreate()
+
+        verify(exactly = 1) { pokemonDetailView.hideReloadButton() }
+        verify(exactly = 1) { pokemonDetailView.drawPokemonDetail(examplePokemonDetail) }
+    }
+
+    @Test
+    fun `Do not call View (if not attached) to show progress while expecting GetPokemonDetailUseCase response and then hide progress when GetPokemonDetailUseCase returns success response`() {
+        val retrievedId = 1
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+
+        pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
+        pokemonDetailPresenter.onCreate()
+
+
+        verify(exactly = 0) { pokemonDetailView.showProgress() }
+        verify(exactly = 0) { pokemonDetailView.hideProgress() }
+    }
+
+    @Test
+    fun `Call View (if attached) to show progress while expecting GetPokemonDetailUseCase response and then hide progress when GetPokemonDetailUseCase returns error`() {
+        val retrievedId = 2
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Failure(ErrorModel())
+
+        pokemonDetailPresenter.attachView(pokemonDetailView)
+        pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
+        pokemonDetailPresenter.onCreate()
+
+        verifyOrder {
+            pokemonDetailView.showProgress()
+            pokemonDetailView.hideProgress()
+        }
+    }
+
+    @Test
+    fun `Call View (if attached) to show reload button and show generic error when GetPokemonDetailUseCase returns error`() {
+        val retrievedId = 2
+        val genericError = ErrorModel("GenericError")
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Failure(genericError)
+
+        pokemonDetailPresenter.attachView(pokemonDetailView)
+        pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
+        pokemonDetailPresenter.onCreate()
+
+        verifyOrder {
+            pokemonDetailView.showReloadButton()
+            pokemonDetailView.showErrorMessage(genericError.errorMessage)
+        }
+    }
+
+    @Test
+    fun `Do not call View (if not attached) to show progress while expecting GetPokemonDetailUseCase response and then hide progress when GetPokemonDetailUseCase returns error`() {
+        val retrievedId = 2
+        mockMainDispatcher()
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Failure(ErrorModel())
+
+        pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
+        pokemonDetailPresenter.onCreate()
+
+
+        verify(exactly = 0) { pokemonDetailView.showProgress() }
+        verify(exactly = 0) { pokemonDetailView.hideProgress() }
     }
 }

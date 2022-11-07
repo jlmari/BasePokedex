@@ -36,9 +36,9 @@ internal class GetPokemonDetailUseCaseTest {
 
     @Test
     fun `Call PokeRepository to get pokemon detail with correct id when invoked`() {
+        val pokemonId = 61
         mockGetPokemonDetailSuccessResponse()
 
-        val pokemonId = 61
         runBlocking { getPokemonDetailUseCase.invoke(pokemonId) }
 
         coVerify(exactly = 1) { pokeRepository.getPokemonDetail(pokemonId) }

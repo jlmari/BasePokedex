@@ -13,7 +13,7 @@ class PokemonDetailPresenter @Inject constructor(
 ) : BasePresenter<PokemonDetailContract.View, PokemonDetailContract.Router>(appDispatchers),
     PokemonDetailContract.Presenter {
 
-    private var pokemonId: Int = 0
+    private var pokemonId: Int = UNASSIGNED_POKEMON_ID
 
     override fun onPokemonIdRetrieved(pokemonId: Int) {
         this.pokemonId = pokemonId
@@ -29,22 +29,29 @@ class PokemonDetailPresenter @Inject constructor(
     }
 
     private fun requestPokemonInfo() {
-        scope.launch {
-            viewAction { showProgress() }
-            getPokemonDetailUseCase.invoke(pokemonId).either(
-                onSuccess = {
-                    viewAction {
-                        hideProgress()
-                        hideReloadButton()
-                        drawPokemonDetail(it)
+        if (pokemonId != UNASSIGNED_POKEMON_ID) {
+            scope.launch {
+                viewAction { showProgress() }
+                getPokemonDetailUseCase.invoke(pokemonId).either(
+                    onSuccess = {
+                        viewAction {
+                            hideProgress()
+                            hideReloadButton()
+                            drawPokemonDetail(it)
+                        }
+                    }, onFailure = {
+                        viewAction {
+                            hideProgress()
+                            showReloadButton()
+                            showErrorMessage(it.errorMessage)
+                        }
                     }
-                }, onFailure = {
-                    viewAction {
-                        hideProgress()
-                        showReloadButton()
-                    }
-                }
-            )
+                )
+            }
         }
+    }
+
+    companion object {
+        private const val UNASSIGNED_POKEMON_ID: Int = 0
     }
 }

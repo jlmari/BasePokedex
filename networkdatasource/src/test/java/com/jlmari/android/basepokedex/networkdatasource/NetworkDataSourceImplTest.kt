@@ -64,10 +64,10 @@ internal class NetworkDataSourceImplTest {
 
     @Test
     fun `Call ApiService to get pokemons with correct parameters when getPokemons() invoked`() {
-        mockApiServicePokemonListApi(getPokemonsResponseApiModel)
-
         val inputOffset = 0
         val inputLimit = 40
+        mockApiServicePokemonListApi(getPokemonsResponseApiModel)
+
         runBlocking { networkDataSourceImpl.getPokemons(inputOffset, inputLimit) }
 
         coVerify(exactly = 1) { apiService.getPokemons(inputOffset, inputLimit) }
@@ -84,9 +84,9 @@ internal class NetworkDataSourceImplTest {
 
     @Test
     fun `Call ApiService to get pokemon detail with correct id when getPokemonDetail() invoked`() {
+        val pokemonId = 12
         mockApiServicePokemonDetailApi(getPokemonDetailResponseApiModel)
 
-        val pokemonId = 12
         runBlocking { networkDataSourceImpl.getPokemonDetail(pokemonId) }
 
         coVerify(exactly = 1) { apiService.getPokemonDetail(pokemonId) }

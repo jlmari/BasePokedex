@@ -44,10 +44,10 @@ internal class PokeRepositoryImplTest {
 
     @Test
     fun `Call Network Data Source to get pokemon list with correct parameters when getPokemons() invoked`() {
-        mockGetPokemonsSuccessResponse()
-
         val inputOffset = 45
         val inputLimit = 15
+        mockGetPokemonsSuccessResponse()
+
         runBlocking { pokeRepositoryImpl.getPokemons(inputOffset, inputLimit) }
 
         coVerify(exactly = 1) { networkDataSource.getPokemons(inputOffset, inputLimit) }
@@ -64,9 +64,9 @@ internal class PokeRepositoryImplTest {
 
     @Test
     fun `Call Network Data Source to get pokemon detail with correct id when getPokemonDetail() invoked`() {
+        val pokemonId = 33
         mockGetPokemonDetailSuccessResponse()
 
-        val pokemonId = 33
         runBlocking { pokeRepositoryImpl.getPokemonDetail(pokemonId) }
 
         coVerify(exactly = 1) { networkDataSource.getPokemonDetail(pokemonId) }

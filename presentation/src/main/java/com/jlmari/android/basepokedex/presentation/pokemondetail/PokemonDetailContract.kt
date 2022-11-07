@@ -12,6 +12,8 @@ interface PokemonDetailContract {
         fun hideReloadButton()
 
         fun drawPokemonDetail(pokemonDetail: PokemonDetailModel)
+
+        fun showErrorMessage(errorMessage: String?)
     }
 
     interface Router : BaseContract.Router

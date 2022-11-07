@@ -36,10 +36,10 @@ internal class GetPokemonsUseCaseTest {
 
     @Test
     fun `Call PokeRepository to get pokemons with correct parameters when invoked`() {
-        mockGetPokemonsSuccessResponse()
-
         val inputOffset = 60
         val inputLimit = 20
+        mockGetPokemonsSuccessResponse()
+
         runBlocking { getPokemonsUseCase.invoke(inputOffset, inputLimit) }
 
         coVerify(exactly = 1) { pokeRepository.getPokemons(inputOffset, inputLimit) }
