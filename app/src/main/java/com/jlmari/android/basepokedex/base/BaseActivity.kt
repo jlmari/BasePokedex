@@ -69,10 +69,6 @@ abstract class BaseActivity<in V : BaseContract.View, in R : BaseContract.Router
         // Get extras
         retrieveBundleData(savedInstanceState ?: intent.extras ?: Bundle.EMPTY)
 
-        // Avoid rotation in both mobile phones and tablets
-        @SuppressLint("SourceLockedOrientationActivity")
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
         // Set layout
         setContentView(layoutResId)
 
