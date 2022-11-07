@@ -27,7 +27,7 @@ internal class PokemonDetailPresenterTest {
     @InjectMockKs
     private lateinit var pokemonDetailPresenter: PokemonDetailPresenter
 
-    private val examplePokemonDetail: PokemonDetailModel = PokemonDetailModel(
+    private val testPokemonDetail: PokemonDetailModel = PokemonDetailModel(
         1,
         1,
         "bulbasaur",
@@ -53,7 +53,7 @@ internal class PokemonDetailPresenterTest {
     fun `Call GetPokemonDetailUseCase with correct pokemon id (if retrieved) when onCreate()`() {
         val retrievedId = 1
         mockMainDispatcher()
-        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(testPokemonDetail)
 
         pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
         pokemonDetailPresenter.onCreate()
@@ -65,7 +65,7 @@ internal class PokemonDetailPresenterTest {
     fun `Do not call GetPokemonDetailUseCase if pokemon id not retrieved when onCreate()`() {
         val retrievedId = 0
         mockMainDispatcher()
-        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(testPokemonDetail)
 
         pokemonDetailPresenter.onCreate()
 
@@ -76,7 +76,7 @@ internal class PokemonDetailPresenterTest {
     fun `Call GetPokemonDetailUseCase with correct pokemon id (if retrieved) when onReloadDetailButtonClicked()`() {
         val retrievedId = 1
         mockMainDispatcher()
-        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(testPokemonDetail)
 
         pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
         pokemonDetailPresenter.onReloadDetailButtonClicked()
@@ -88,7 +88,7 @@ internal class PokemonDetailPresenterTest {
     fun `Do not call GetPokemonDetailUseCase if pokemon id not retrieved when onReloadDetailButtonClicked()`() {
         val retrievedId = 0
         mockMainDispatcher()
-        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(testPokemonDetail)
 
         pokemonDetailPresenter.onReloadDetailButtonClicked()
 
@@ -99,7 +99,7 @@ internal class PokemonDetailPresenterTest {
     fun `Call View (if attached) to show progress while expecting GetPokemonDetailUseCase response and then hide progress when GetPokemonDetailUseCase returns success response`() {
         val retrievedId = 1
         mockMainDispatcher()
-        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(testPokemonDetail)
 
         pokemonDetailPresenter.attachView(pokemonDetailView)
         pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
@@ -115,21 +115,21 @@ internal class PokemonDetailPresenterTest {
     fun `Call View (if attached) to hide reload button and draw pokemon detail when GetPokemonDetailUseCase returns success response`() {
         val retrievedId = 1
         mockMainDispatcher()
-        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(testPokemonDetail)
 
         pokemonDetailPresenter.attachView(pokemonDetailView)
         pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
         pokemonDetailPresenter.onCreate()
 
         verify(exactly = 1) { pokemonDetailView.hideReloadButton() }
-        verify(exactly = 1) { pokemonDetailView.drawPokemonDetail(examplePokemonDetail) }
+        verify(exactly = 1) { pokemonDetailView.drawPokemonDetail(testPokemonDetail) }
     }
 
     @Test
     fun `Do not call View (if not attached) to show progress while expecting GetPokemonDetailUseCase response and then hide progress when GetPokemonDetailUseCase returns success response`() {
         val retrievedId = 1
         mockMainDispatcher()
-        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(examplePokemonDetail)
+        coEvery { getPokemonDetailUseCase.invoke(any()) } returns Success(testPokemonDetail)
 
         pokemonDetailPresenter.onPokemonIdRetrieved(retrievedId)
         pokemonDetailPresenter.onCreate()

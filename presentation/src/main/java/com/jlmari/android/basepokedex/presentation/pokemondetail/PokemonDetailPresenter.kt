@@ -39,11 +39,11 @@ class PokemonDetailPresenter @Inject constructor(
                             hideReloadButton()
                             drawPokemonDetail(it)
                         }
-                    }, onFailure = {
+                    }, onFailure = { error ->
                         viewAction {
                             hideProgress()
                             showReloadButton()
-                            showErrorMessage(it.errorMessage)
+                            showErrorMessage(error.errorMessage)
                         }
                     }
                 )

@@ -16,7 +16,7 @@ data class GetPokemonDetailResponseApiModel(
     @SerializedName("types")
     val typeList: List<PokemonTypeApiModel>,
     @SerializedName("sprites")
-    val photoList: PokemonSpritesApiModel,
+    val sprites: PokemonSpritesApiModel,
     @SerializedName("abilities")
     val abilityList: List<PokemonAbilityApiModel>,
     @SerializedName("moves")

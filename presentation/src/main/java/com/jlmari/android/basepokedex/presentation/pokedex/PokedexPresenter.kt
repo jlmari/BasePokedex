@@ -27,18 +27,18 @@ class PokedexPresenter @Inject constructor(
         scope.launch {
             viewAction { showProgress() }
             getPokemonsUseCase.invoke(offset, DEFAULT_LIMIT).either(
-                onSuccess = {
+                onSuccess = { pokemonList ->
                     viewAction { hideProgress() }
-                    if (it.isNotEmpty()) {
+                    if (pokemonList.isNotEmpty()) {
                         pokedexOffset += DEFAULT_LIMIT
-                        viewAction { updatePokedex(it) }
+                        viewAction { updatePokedex(pokemonList) }
                     } else {
                         viewAction { showNoMorePokemonsError() }
                     }
-                }, onFailure = {
+                }, onFailure = { error ->
                     viewAction {
                         hideProgress()
-                        showErrorMessage(it.errorMessage)
+                        showErrorMessage(error.errorMessage)
                     }
                 }
             )

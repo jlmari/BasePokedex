@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class NetworkDataSourceModule {
+object NetworkDataSourceModule {
 
     @Provides
     @PerApplication

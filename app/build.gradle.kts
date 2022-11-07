@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = Config.AppConfig.namespace
+    namespace = Config.AppConfig.appNamespace
     compileSdk = Config.AppConfig.compileSdkVersion
 
     defaultConfig {
@@ -65,6 +65,7 @@ dependencies {
     implementation(project(Modules.domain))
     implementation(project(Modules.data))
     implementation(project(Modules.networkDataSource))
+    implementation(project(Modules.memoryDataSource))
 
     // Support
     implementation(Libraries.xAppCompat)

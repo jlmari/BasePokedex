@@ -14,8 +14,9 @@ class PokemonViewHolder(
     fun bind(pokemon: PokemonModel) {
         with(binding) {
             cvPokemonItem.setOnClickListener { onItemClickListener.invoke(pokemon.id) }
-            tvPokemonName.text = pokemon.name.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+            tvPokemonName.text = pokemon.name.replaceFirstChar { firstChar ->
+                if (firstChar.isLowerCase()) firstChar.titlecase(Locale.getDefault())
+                else firstChar.toString()
             }
         }
     }

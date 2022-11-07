@@ -1,6 +1,6 @@
 object Versions {
     const val gradle = "7.3.1"
-    const val kotlin = "1.7.0"
+    const val kotlin = "1.7.20"
 
     // Support
     const val xAppcompat = "1.4.2"
@@ -23,8 +23,10 @@ object Versions {
     const val glide = "4.14.2"
 
     // Utils
-    const val playServices = "19.2.0"
     const val xMultidex = "2.0.1"
+
+    // Room
+    const val room = "2.4.3"
 
     // Dagger
     const val dagger = "2.44"
@@ -32,4 +34,5 @@ object Versions {
     // Testing
     const val jUnit = "4.13.2"
     const val mockK = "1.13.2"
+    const val roboelectric = "4.9"
 }

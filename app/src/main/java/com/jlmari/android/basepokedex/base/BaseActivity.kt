@@ -1,8 +1,6 @@
 package com.jlmari.android.basepokedex.base
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent

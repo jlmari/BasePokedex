@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Base Pokedex"
-include(":app", ":presentation", ":domain", ":data", ":networkdatasource")
+include(":app", ":presentation", ":domain", ":data", ":networkdatasource", ":memorydatasource")
