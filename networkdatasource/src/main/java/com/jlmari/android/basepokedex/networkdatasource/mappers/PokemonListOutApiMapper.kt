@@ -5,7 +5,7 @@ import com.jlmari.android.basepokedex.domain.utils.ListMapper
 import com.jlmari.android.basepokedex.networkdatasource.models.PokemonApiModel
 import javax.inject.Inject
 
-class PokemonMapper @Inject constructor() : ListMapper<PokemonApiModel, PokemonModel> {
+class PokemonListOutApiMapper @Inject constructor() : ListMapper<PokemonApiModel, PokemonModel> {
 
     override fun map(from: PokemonApiModel): PokemonModel =
         PokemonModel(from.name, convertUrlToId(from.detailUrl))

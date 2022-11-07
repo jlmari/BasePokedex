@@ -32,11 +32,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-        }
-    }
 }
 
 dependencies {

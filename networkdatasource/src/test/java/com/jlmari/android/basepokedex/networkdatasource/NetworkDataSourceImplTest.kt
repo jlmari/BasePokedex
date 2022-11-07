@@ -1,8 +1,8 @@
 package com.jlmari.android.basepokedex.networkdatasource
 
 import com.jlmari.android.basepokedex.networkdatasource.client.NetworkClient
-import com.jlmari.android.basepokedex.networkdatasource.mappers.PokemonDetailMapper
-import com.jlmari.android.basepokedex.networkdatasource.mappers.PokemonMapper
+import com.jlmari.android.basepokedex.networkdatasource.mappers.PokemonDetailOutApiMapper
+import com.jlmari.android.basepokedex.networkdatasource.mappers.PokemonListOutApiMapper
 import com.jlmari.android.basepokedex.networkdatasource.models.GetPokemonDetailResponseApiModel
 import com.jlmari.android.basepokedex.networkdatasource.models.GetPokemonsResponseApiModel
 import com.jlmari.android.basepokedex.networkdatasource.models.PokemonApiModel
@@ -24,7 +24,7 @@ internal class NetworkDataSourceImplTest {
     private lateinit var networkClient: NetworkClient
 
     @MockK
-    private lateinit var pokemonMapper: PokemonMapper
+    private lateinit var pokemonListOutApiMapper: PokemonListOutApiMapper
 
     @MockK
     private lateinit var getPokemonsResponseApiModel: GetPokemonsResponseApiModel
@@ -33,7 +33,7 @@ internal class NetworkDataSourceImplTest {
     private lateinit var pokemonListApiModel: List<PokemonApiModel>
 
     @MockK
-    private lateinit var pokemonDetailMapper: PokemonDetailMapper
+    private lateinit var pokemonDetailOutApiMapper: PokemonDetailOutApiMapper
 
     @MockK
     private lateinit var getPokemonDetailResponseApiModel: GetPokemonDetailResponseApiModel
@@ -79,7 +79,7 @@ internal class NetworkDataSourceImplTest {
 
         runBlocking { networkDataSourceImpl.getPokemons(0, 0) }
 
-        verify(exactly = 1) { pokemonMapper.map(pokemonListApiModel) }
+        verify(exactly = 1) { pokemonListOutApiMapper.map(pokemonListApiModel) }
     }
 
     @Test
@@ -98,6 +98,6 @@ internal class NetworkDataSourceImplTest {
 
         runBlocking { networkDataSourceImpl.getPokemonDetail(1) }
 
-        verify(exactly = 1) { pokemonDetailMapper.map(getPokemonDetailResponseApiModel) }
+        verify(exactly = 1) { pokemonDetailOutApiMapper.map(getPokemonDetailResponseApiModel) }
     }
 }

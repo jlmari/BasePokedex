@@ -11,4 +11,4 @@ data class PokemonDetailModel(
     val frontPhotoUrl: String,
     val abilities: List<String>,
     val moves: List<String>
-)
+) : EntityModel

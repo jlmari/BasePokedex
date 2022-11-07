@@ -23,7 +23,6 @@ object Versions {
     const val glide = "4.14.2"
 
     // Utils
-    const val playServices = "19.2.0"
     const val xMultidex = "2.0.1"
 
     // Room

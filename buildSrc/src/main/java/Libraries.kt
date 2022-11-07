@@ -9,8 +9,6 @@ object Libraries {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
 
     // Arch Components
-    const val xViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.xLifecycle}"
-    const val xViewModelState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.xLifecycle}"
     const val xLifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.xLifecycle}"
     const val xLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.xLifecycle}"
 
