@@ -16,5 +16,5 @@ interface PokemonDetailDao {
     suspend fun insertPokemonDetail(pokemonDetailDbModel: PokemonDetailDbModel)
 
     @Query("DELETE FROM pokemonDetail WHERE id = :id")
-    suspend fun deletePokemonDetail(id: String)
+    suspend fun deletePokemonDetail(id: Int)
 }

@@ -32,6 +32,11 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -51,6 +56,9 @@ dependencies {
     implementation(Libraries.dagger)
 
     // Testing
+    testImplementation(Libraries.xLifecycle)
+    testImplementation(Libraries.xLiveData)
     testImplementation(Libraries.jUnit)
     testImplementation(Libraries.mockK)
+    testImplementation(Libraries.roboelectric)
 }

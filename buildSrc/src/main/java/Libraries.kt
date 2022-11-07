@@ -11,8 +11,8 @@ object Libraries {
     // Arch Components
     const val xViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.xLifecycle}"
     const val xViewModelState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.xLifecycle}"
-    const val xLifeData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.xLifecycle}"
     const val xLifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.xLifecycle}"
+    const val xLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.xLifecycle}"
 
     // Kotlin Coroutines
     const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
@@ -31,9 +31,6 @@ object Libraries {
     const val xNavigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.xNNavigation}"
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
 
-    // Play Services
-    const val playServices = "com.google.android.gms:play-services-auth:${Versions.playServices}"
-
     // Room
     const val room = "androidx.room:room-runtime:${Versions.room}"
     const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
@@ -47,4 +44,5 @@ object Libraries {
     const val jUnit = "junit:junit:${Versions.jUnit}"
     const val mockK = "io.mockk:mockk:${Versions.mockK}"
     const val mockKAndroid = "io.mockk:mockk-android:${Versions.mockK}"
+    const val roboelectric =  "org.robolectric:robolectric:${Versions.roboelectric}"
 }
