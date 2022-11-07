@@ -49,6 +49,7 @@ Each module or layer takes care of only one thing and not more than one.
 In other words, they take care of its own and should not know the details of other layers.
 
 app --------> presentation --------> domain <-------- data <-------- each data source
+
 views --> presenters --> pure entities and use cases <-- repositories <-- data sources
 
 ### Other considerations
