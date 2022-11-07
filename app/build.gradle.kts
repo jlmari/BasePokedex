@@ -20,8 +20,25 @@ android {
         testInstrumentationRunner = Config.AppConfig.testRunner
     }
 
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+            storeFile = file("../certs/debug.keystore")
+            storePassword = "android"
+        }
+        // This is just used for checking proguard rules, use your own release signing key
+        create("release") {
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+            storeFile = file("../certs/debug.keystore")
+            storePassword = "android"
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -57,6 +74,7 @@ dependencies {
     implementation(Libraries.materialDesign)
     implementation(Libraries.xNavigationFragment)
     implementation(Libraries.xNavigationUi)
+    implementation(Libraries.glide)
 
     // DI
     implementation(Libraries.dagger)

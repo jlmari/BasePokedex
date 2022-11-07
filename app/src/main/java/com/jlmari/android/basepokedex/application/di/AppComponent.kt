@@ -5,6 +5,7 @@ import com.jlmari.android.basepokedex.application.PokeApp
 import com.jlmari.android.basepokedex.application.scopes.PerApplication
 import com.jlmari.android.basepokedex.main.di.MainComponent
 import com.jlmari.android.basepokedex.pokedex.di.PokedexComponent
+import com.jlmari.android.basepokedex.pokemondetail.di.PokemonDetailComponent
 import dagger.BindsInstance
 import dagger.Component
 
@@ -31,4 +32,6 @@ interface AppComponent {
     fun mainComponentFactory(): MainComponent.Factory
 
     fun pokedexComponentFactory(): PokedexComponent.Factory
+
+    fun pokemonDetailFactory(): PokemonDetailComponent.Factory
 }

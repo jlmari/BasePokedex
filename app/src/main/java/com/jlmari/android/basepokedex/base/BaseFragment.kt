@@ -41,8 +41,12 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
 
     /**
      * Specify the binding inflater to be used in the [BaseFragment.onCreateView] method.
+     * Also manage rootView to avoid recreating the same view more than once in special cases like
+     * configuration changes or back navigation.
      */
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
+    private var rootView: View? = null
+    private var isCreatingViewFirstTime: Boolean = true
 
     /**
      * Add the required initializations to inject a custom progress dialog for all fragments.
@@ -74,8 +78,15 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        vbHelperImpl.updateBinding(bindingInflater(inflater, container, false))
-        return getBinding().root
+        rootView?.let {
+            isCreatingViewFirstTime = false
+            return it
+        } ?: run {
+            isCreatingViewFirstTime = true
+            vbHelperImpl.updateBinding(bindingInflater(inflater, container, false))
+            rootView = getBinding().root
+            return getBinding().root
+        }
     }
 
     /**
@@ -87,19 +98,24 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get extras
-        retrieveBundleData(savedInstanceState ?: arguments ?: Bundle.EMPTY)
+        if (isCreatingViewFirstTime) {
+            // Get extras
+            retrieveBundleData()
 
-        // Notify presenter
-        @Suppress("UNCHECKED_CAST")
-        presenter.attachView(this as V)
-        presenter.onCreate()
+            // Notify presenter
+            @Suppress("UNCHECKED_CAST")
+            presenter.attachView(this as V)
+            presenter.onCreate()
 
-        // Init views
-        initViews()
+            // Init views
+            initViews()
 
-        // Setup listeners
-        setupListeners()
+            // Setup listeners
+            setupListeners()
+        } else {
+            @Suppress("UNCHECKED_CAST")
+            presenter.attachView(this as V)
+        }
     }
 
     /**
@@ -154,10 +170,8 @@ abstract class BaseFragment<in V : BaseContract.View, in R : BaseContract.Router
     /**
      * Method to get all the extra data sent via Intent's from another context.
      * It's an optional method since maybe there is not extra data needed.
-     *
-     * @param bundle The required [Bundle] where the data is compressed
      */
-    open fun retrieveBundleData(bundle: Bundle) {
+    open fun retrieveBundleData() {
     }
 
     /**

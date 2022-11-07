@@ -20,6 +20,7 @@ object Versions {
     // UI
     const val materialDesign = "1.4.0"
     const val xNNavigation = "2.3.5"
+    const val glide = "4.14.2"
 
     // Utils
     const val playServices = "19.2.0"

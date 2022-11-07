@@ -9,6 +9,21 @@
         android:id="@+id/pokedexFragment"
         android:name="com.jlmari.android.basepokedex.pokedex.PokedexFragment"
         android:label="PokedexFragment"
-        tools:layout="@layout/fr_pokedex" />
+        tools:layout="@layout/fr_pokedex">
+        <action
+            android:id="@+id/action_pokedexFragment_to_pokemonDetailFragment"
+            app:destination="@id/pokemonDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pokemonDetailFragment"
+        android:name="com.jlmari.android.basepokedex.pokemondetail.PokemonDetailFragment"
+        android:label="PokemonDetailFragment"
+        tools:layout="@layout/fr_pokemon_detail">
+        <argument
+            android:name="pokemonId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

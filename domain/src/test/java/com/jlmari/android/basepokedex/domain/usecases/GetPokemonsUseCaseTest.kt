@@ -30,12 +30,16 @@ internal class GetPokemonsUseCaseTest {
         MockKAnnotations.init(this, relaxUnitFun = true)
     }
 
+    private fun mockGetPokemonsSuccessResponse() {
+        coEvery { pokeRepository.getPokemons(any(), any()) } returns Success(pokemonList)
+    }
+
     @Test
     fun `Call PokeRepository to get pokemons with correct parameters when invoked`() {
-        coEvery { pokeRepository.getPokemons(any(), any()) } returns Success(pokemonList)
-
         val inputOffset = 60
         val inputLimit = 20
+        mockGetPokemonsSuccessResponse()
+
         runBlocking { getPokemonsUseCase.invoke(inputOffset, inputLimit) }
 
         coVerify(exactly = 1) { pokeRepository.getPokemons(inputOffset, inputLimit) }
@@ -43,7 +47,7 @@ internal class GetPokemonsUseCaseTest {
 
     @Test
     fun `Return the expected List of PokemonModel by PokeRepository when invoked`() {
-        coEvery { pokeRepository.getPokemons(any(), any()) } returns Success(pokemonList)
+        mockGetPokemonsSuccessResponse()
 
         val obtainedPokemonList = runBlocking { getPokemonsUseCase.invoke(0, 0) }.getOrThrow()
 

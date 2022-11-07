@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/svPokedex"
+    android:id="@+id/sv_pokedex"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPokedex"
+            android:id="@+id/rv_pokedex"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -19,7 +19,7 @@
             tools:listitem="@layout/item_pokemon_list" />
 
         <ProgressBar
-            android:id="@+id/pbLoadMorePokemons"
+            android:id="@+id/pb_load_more_pokemons"
             android:layout_width="match_parent"
             android:layout_height="@dimen/progress_size" />
 

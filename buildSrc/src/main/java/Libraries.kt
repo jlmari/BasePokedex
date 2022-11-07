@@ -29,6 +29,7 @@ object Libraries {
     const val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
     const val xNavigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.xNNavigation}"
     const val xNavigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.xNNavigation}"
+    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
 
     // Play Services
     const val playServices = "com.google.android.gms:play-services-auth:${Versions.playServices}"
