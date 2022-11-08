@@ -8,6 +8,7 @@ import com.jlmari.android.basepokedex.domain.models.PokemonDetailModel
 import com.jlmari.android.basepokedex.domain.models.PokemonModel
 import com.jlmari.android.basepokedex.domain.repositories.PokeRepository
 import com.jlmari.android.basepokedex.domain.utils.Response
+import com.jlmari.android.basepokedex.domain.utils.Success
 import javax.inject.Inject
 
 class PokeRepositoryImpl @Inject constructor(
@@ -27,7 +28,7 @@ class PokeRepositoryImpl @Inject constructor(
             networkDataSource = { networkDataSource.getPokemonDetail(id) },
             memoryCallback = { pokemonDetail ->
                 memoryDataSource.savePokemonDetail(pokemonDetail)
-                memoryDataSource.getPokemonDetail(id)
+                Success(pokemonDetail)
             }
         )
 }
